@@ -1,0 +1,13 @@
+import sqlite3
+
+def store_daily_summary(summary):
+    conn = sqlite3.connect('weather_data.db')
+    cursor = conn.cursor()
+    cursor.execute('''CREATE TABLE IF NOT EXISTS daily_summary
+                      (city TEXT, date TEXT, avg_temp REAL, max_temp REAL,
+                      min_temp REAL, dominant_weather TEXT)''')
+    cursor.execute('''INSERT INTO daily_summary VALUES (?, ?, ?, ?, ?, ?)''', 
+                   (summary["city"], summary["date"], summary["avg_temp"], 
+                    summary["max_temp"], summary["min_temp"], summary["dominant_weather"]))
+    conn.commit()
+    conn.close()
