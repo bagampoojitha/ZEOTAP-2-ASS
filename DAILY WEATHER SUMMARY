@@ -1,0 +1,14 @@
+import pandas as pd
+from collections import Counter
+
+def daily_summary(weather_data):
+    df = pd.DataFrame(weather_data)
+    daily_aggregate = {
+        "city": weather_data[0]["city"],
+        "date": pd.to_datetime(weather_data[0]["timestamp"], unit="s").date(),
+        "avg_temp": df["temp"].apply(lambda x: convert_temperature(x)).mean(),
+        "max_temp": df["temp"].apply(lambda x: convert_temperature(x)).max(),
+        "min_temp": df["temp"].apply(lambda x: convert_temperature(x)).min(),
+        "dominant_weather": Counter(df["main"]).most_common(1)[0][0]
+    }
+    return daily_aggregate
