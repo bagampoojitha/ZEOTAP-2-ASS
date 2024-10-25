@@ -1,0 +1,14 @@
+import matplotlib.pyplot as plt
+
+def plot_daily_summary(city):
+    conn = sqlite3.connect('weather_data.db')
+    df = pd.read_sql_query(f"SELECT * FROM daily_summary WHERE city='{city}'", conn)
+    plt.plot(df['date'], df['avg_temp'], label='Avg Temp')
+    plt.plot(df['date'], df['max_temp'], label='Max Temp')
+    plt.plot(df['date'], df['min_temp'], label='Min Temp')
+    plt.title(f"Daily Temperature Trends for {city}")
+    plt.xlabel('Date')
+    plt.ylabel('Temperature (°C)')
+    plt.legend()
+    plt.show()
+    conn.close()
