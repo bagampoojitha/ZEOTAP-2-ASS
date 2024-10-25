@@ -1,0 +1,6 @@
+def convert_temperature(kelvin_temp, unit="C"):
+    if unit == "C":
+        return kelvin_temp - 273.15
+    elif unit == "F":
+        return (kelvin_temp - 273.15) * 9/5 + 32
+    return kelvin_temp
