@@ -1,0 +1,25 @@
+def main():
+    weather_history = {city: [] for city in CITIES}
+    last_temps = {city: None for city in CITIES}
+
+    while True:
+        for city in CITIES:
+            weather = fetch_weather_data(city)
+            if weather:
+                current_temp = convert_temperature(weather["temp"])
+                
+                # Append to history
+                weather_history[city].append(weather)
+
+                # Process daily summary at midnight
+                if len(weather_history[city]) >= 288:  # Assuming 5-minute intervals, 288 samples ~ 24 hours
+                    summary = daily_summary(weather_history[city])
+                    store_daily_summary(summary)
+                    weather_history[city] = []  # Reset daily history for next day
+
+                # Check alert thresholds
+                last_temp = last_temps.get(city)
+                check_alert_conditions(current_temp, last_temp, weather["main"])
+                last_temps[city] = current_temp
+
+        time.sleep(300)  # 5-minute interval
