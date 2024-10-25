@@ -1,0 +1,6 @@
+ALERT_THRESHOLD_TEMP = 35.0  # in Celsius
+
+def check_alert_conditions(current_temp, last_temp, weather_condition):
+    if current_temp > ALERT_THRESHOLD_TEMP and last_temp > ALERT_THRESHOLD_TEMP:
+        print(f"Alert! High Temperature: {current_temp}°C with {weather_condition}")
+        # You could add email alerting here
